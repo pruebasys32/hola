@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <link rel="icon" href="images/logo.png" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CodeSys Engineering</title>
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background-color: #0a0f1c;
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      position: fixed;
+      top: 0;
+      width: 88%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      color: #1de9b6;
+      font-size: 1.5rem;
+    }
+
+    .navbar .logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .navbar ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar ul li a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .navbar ul li a:hover {
+      color: #1de9b6;
+    }
+
+    .btn-free {
+      background-color: #1de9b6;
+      border: none;
+      color: #000;
+      margin-left: 0px;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-free:hover {
+      background-color: #29ffc6;
+    }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      background: url('images/1.png') no-repeat center center/cover;
+      position: relative;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .hero.hidden {
+      opacity: 0;
+      transform: translateY(-50px);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 700px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      border-radius: 15px;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      color: #1de9b6;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    /* PORTFOLIO */
+    .portfolio-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 2rem;
+      z-index: 5;
+    }
+
+    .grupo-izquierdo {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(200px, 1fr));
+      gap: 2rem;
+      justify-content: center;
+    }
+
+ 
+   
+
+    .grupo-izquierdo img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 15px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    
+    }
+
+    .grupo-derecho img {
+      width: 200px;
+    }
+
+    .img-container .hover-text {
+      position: absolute;
+      top: 0; left: 0;
+      width: 93.3%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 15px;
+      pointer-events: none;
+    }
+
+    .img-container:hover .hover-text {
+      opacity: 1;
+    }
+
+    .img-container:hover img {
+      transform: scale(1.05);
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #1de9b6;
+    }
+
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: white;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    .hero-content p {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-top: 0.5rem;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+}
+.flecha-bajar {
+  font-size: 2rem;
+  color: #1de9b6; /* verde de tu página */
+  margin-top: 1rem;
+  animation: salto 1s infinite;
+}
+
+/* animación tipo salto */
+@keyframes salto {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.img-container {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* luz verde que recorre los bordes */
+.img-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  box-sizing: border-box;
+  border: 4px solid transparent;
+   box-shadow: 0 0 20px #1de9b6;
+  pointer-events: none;
+  animation: neonBorder 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+ h2 {
+  margin-top: 0rem; /* ajusta aquí la altura que desees */
+  margin-left: 0rem;
+  display: flex;
+  justify-content: center;
+}
+
+ h2 {
+  color: #1de9b6;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: rgba(0,0,0,0.3); /* sombra de fondo */
+  border-radius: 10px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+ p {
+ 
+ 
+  text-align: center;
+  padding: 1rem 2rem;
+  background-color: rgba(0,0,0,0.3); /* sombra de fondo */
+  border-radius: 10px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.swiper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #1de9b6;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+}
+
+
+.swiper-button-prev {
+  left: -120px; /* más abierto */
+}
+.swiper-button-next {
+  right: -120px; /* más abierto */
+}
+
+
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mySwiper .swiper-slide img {
+  width: 250px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.swiper-slide-active img {
+  transform: translateX(30px);
+}
+.swiper-button-prev {
+  left: -80px;
+}
+.swiper-button-next {
+  right: -80px;
+}
+
+.swiper-slide-active {
+  transform: translateX(300px) !important;
+}
+.hero-content.hidden {
+  opacity: 0;
+}
+
+.hero-content.animate {
+  animation: fadeSlideHero 1s ease forwards;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo" />
+      <span>CodeSys Engineering</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+        <li><a href="galeria.html">Galeria</a></li>
+        <li><a href="portafolio.html">portafolio</a></li>
+      </ul>
+    </nav>
+      <a
+  class="btn-free"
+  href="https://wa.me/573146079273?text=Hola%20quiero%20más%20información"
+  target="_blank"
+>
+  Contactame
+</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+  <div class="hero-content">
+    <h1>Mi Galeria</h1>
+    <p>Revisa mi trabajo</p>
+    <p class="flecha-bajar">&#x2193;</p>
+    
+
+  </div>
+  
+</section>
+
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio-gallery" id="galeria">
+    <h2>Desarrollo Web</h2>
+        <p>Estas son las paginas que e creado a media de los años son projectos reales </b> y de exelente calidad cada uno de estas paginas cuenta con bases  </b> de datos donde se almacena la informacion muy util cuando quieres crear una pagida donde tengas que trabajar con usuarios</p>
+    <div class="grupo-izquierdo">
+        
+      <div class="img-container" data-aos="fade-up"><img src="images/foto_streamzone1.png" alt="Proyecto 1"><span class="hover-text">Ver imagen</span></div>
+      <div class="img-container" data-aos="fade-up"><img src="images/foto-streamzone2.png" alt="Proyecto 2"><span class="hover-text">Ver imagen</span></div>
+      <div class="img-container" data-aos="fade-up"><img src="images/fondo-streanzone3.png" alt="Proyecto 3"><span class="hover-text">Ver imagen</span></div>
+      <div class="img-container" data-aos="fade-up"><img src="images/foto-streamzone4png.png" alt="Proyecto 4"><span class="hover-text">Ver imagen</span></div>
+      <div class="img-container" data-aos="fade-up"><img src="images/pelisata1.png" alt="Proyecto 5"><span class="hover-text">Ver imagen</span></div>
+      <div class="img-container" data-aos="fade-up"><img src="images/pelisata2.png" alt="Proyecto 6"><span class="hover-text">Ver imagen</span></div>
+    </div>
+     <h2>Desarrollo de apps</h2>
+        <p>Esta aplicacion fue creada con el fin de que personas conozcan la cultura de nuestro municipio.La idea se creo apartir de un proyecto escolar que dio paso a una app capas de mostrar,indicar,y mostrar informacion detallada del lugar o sitio,ademas tambien puedes conocer la historia de los diferentes alcaldes que han echo un exelente trabajo en nuestro municipio.</p>
+   <!-- Incluye Swiper -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/luci1.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/luci2.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/luci3.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/luci 4.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/luci5.jpg" alt=""></div>
+    <div class="swiper-slide"><img src="images/luci6.jpg" alt=""></div>
+  </div>
+
+  <!-- flechas -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+</div>
+
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <span class="close" id="close">&times;</span>
+    <img id="modal-img" src="" alt="imagen ampliada">
+  </div>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: false,
+    });
+
+    // Modal
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
+    const close = document.getElementById("close");
+
+    document.querySelectorAll(".img-container img").forEach(img => {
+      img.addEventListener("click", () => {
+        modal.style.display = "flex";
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+      });
+    });
+
+    close.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Hero ocultar al bajar y aparecer al subir
+    let lastScroll = 0;
+    const hero = document.getElementById("hero");
+
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > lastScroll) {
+        // Bajando
+        hero.classList.add("hidden");
+      } else {
+        // Subiendo
+        hero.classList.remove("hidden");
+      }
+
+      lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  </script>
+  </section>
+
+  <script>
+  const inicioLink = document.querySelector('a[href="#"]');
+  const heroContent = document.querySelector('.hero-content');
+
+  function animarHero() {
+    heroContent.classList.remove('animate');
+    void heroContent.offsetWidth; // reiniciar la animación
+    heroContent.classList.add('animate');
+  }
+
+  window.addEventListener('load', animarHero);
+
+  inicioLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    animarHero();
+  });
+</script>
+<script>
+const swiper = new Swiper(".mySwiper", {
+  slidesPerView: 1,
+  centeredSlides: true,
+  loop: true,
+  autoplay: {
+    delay: 3000, // cada 3 segundos
+    disableOnInteraction: false,
+  },
+  effect: "slide", // o "fade" si prefieres fundido
+  speed: 800,      // transición suave
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+});
+
+
+</script>
+</body>
+</html>
